@@ -18,7 +18,7 @@ public class Dealer extends APlayer
     public void render(Graphics g)
     {
         g.setColor(Color.BLACK);
-        g.drawString("Dealer points: " + valueOf(this.GetPoints()), 400, 100);
+        g.drawString("Dealer points: " + valueOf(this.GetPoints()), 150, 100);
 
         if (this.getDeckSize() > 0)
         {

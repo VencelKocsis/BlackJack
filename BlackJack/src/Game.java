@@ -16,7 +16,7 @@ public class Game extends Canvas implements Runnable
 
     public static Player player;
     public static Dealer dealer;
-    private String pot;
+    public static int pot;
 
     private static KeyHandler key;
     private MouseHandler mouse;
@@ -36,19 +36,19 @@ public class Game extends Canvas implements Runnable
         return new Card(random.nextInt(4), random.nextInt(14));
     }
 
-    public String GetPot()
+    public int GetPot()
     {
         return pot;
     }
 
-    public void SetPot(String p)
+    public void SetPot(int p)
     {
         pot = p;
     }
 
     public void input(KeyHandler key)
     {
-        player.input(key);
+        //player.input(key);
     }
 
     private void init()
@@ -60,12 +60,6 @@ public class Game extends Canvas implements Runnable
 
         handler.addObject(player);
         handler.addObject(dealer);
-
-        Card DealerLeftC = GetRandomCard();
-        Card DealerRightC = GetRandomCard();
-
-        dealer.AddCard(DealerLeftC);
-        dealer.AddCard(DealerRightC);
     }
 
     private synchronized void start()
@@ -128,7 +122,6 @@ public class Game extends Canvas implements Runnable
     private void tick()
     {
         handler.tick();
-        input(key);
     }
 
     private void render()
