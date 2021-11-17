@@ -8,7 +8,7 @@ public class Card
     private boolean ace;
     private int row;
     private int column;
-    private static HashMap<Integer, Integer> Values = new HashMap<Integer, Integer>();
+    private static final HashMap<Integer, Integer> Values = new HashMap<Integer, Integer>();
 
     static
     {

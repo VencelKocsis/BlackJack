@@ -23,7 +23,14 @@ public abstract class APlayer
     public void AddCard(Card c)
     {
         deck.add(c);
-        points += c.GetValue();
+        if (c.IsAce() && points + 11 > 21)
+        {
+            points += 1;
+        }
+        else
+        {
+            points += c.GetValue();
+        }
     }
 
     public int getDeckSize()
@@ -34,6 +41,7 @@ public abstract class APlayer
     public void ClearDeck()
     {
         deck.clear();
+        points = 0;
     }
 
     int GetPoints()
