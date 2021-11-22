@@ -137,8 +137,7 @@ public class KeyHandler implements KeyListener
                                     break;
                                 case KeyEvent.VK_E:
                                     // NEW GAME at this moment
-                                    Game.player.ClearDeck();
-                                    Game.player.setEditablePot(true);
+                                    Game.player.InitRound();
                                     break;
                                 case KeyEvent.VK_Y:
                                     System.out.println("Player hit Tab: DOUBLE DOWN");
@@ -147,8 +146,9 @@ public class KeyHandler implements KeyListener
                                     break;
                                 case KeyEvent.VK_ESCAPE:
                                     System.out.println("Player hit Escape: EXIT");
+                                    Game.player.InitRound();
+                                    SaveGame.Save(Game.player);
                                     System.exit(0);
-                                    //TODO Save();
                                     break;
                                 default:
                                     System.out.println("Wrong input");
@@ -160,30 +160,17 @@ public class KeyHandler implements KeyListener
                 break;
             case BLACKJACK:
                 Game.player.AddMoney((int) (2.5 * Game.pot));
-                Game.pot = 0;
-                Game.player.State = Player.GAMESTATES.INITIAL_POT;
-                Game.player.ClearDeck();
-                Game.player.setEditablePot(true);
-                Game.dealer.ClearDeck();
-                Game.player.wasStand = false;
+                Game.player.InitRound();
                 break;
             case BUST:
             case LOSE:
                 Game.pot = 0;
                 Game.player.State = Player.GAMESTATES.INITIAL_POT;
-                Game.player.ClearDeck();
-                Game.player.setEditablePot(true);
-                Game.dealer.ClearDeck();
-                Game.player.wasStand = false;
+                Game.player.InitRound();
                 break;
             case WINNER:
                 Game.player.AddMoney(2 * Game.pot);
-                Game.player.State = Player.GAMESTATES.INITIAL_POT;
-                Game.pot = 0;
-                Game.player.ClearDeck();
-                Game.player.setEditablePot(true);
-                Game.dealer.ClearDeck();
-                Game.player.wasStand = false;
+                Game.player.InitRound();
                 break;
             case STAND:
                 Game.dealer.AddCard(Game.GetRandomCard());
@@ -191,11 +178,7 @@ public class KeyHandler implements KeyListener
                 break;
             case DRAW:
                 Game.player.AddMoney(Game.pot);
-                Game.pot = 0;
-                Game.player.ClearDeck();
-                Game.player.setEditablePot(true);
-                Game.dealer.ClearDeck();
-                Game.player.wasStand = false;
+                Game.player.InitRound();
                 break;
         }
     }

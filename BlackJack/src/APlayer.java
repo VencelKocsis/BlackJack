@@ -1,7 +1,8 @@
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class APlayer
+public abstract class APlayer implements Serializable
 {
     private ArrayList<Card> deck;
     private int points;

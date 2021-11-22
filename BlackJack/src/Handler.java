@@ -3,23 +3,23 @@ import java.util.LinkedList;
 
 public class Handler
 {
-    public LinkedList<APlayer> object = new LinkedList<APlayer>();
+    public static LinkedList<APlayer> object = new LinkedList<APlayer>();
 
     // Runs through everything
     public void tick()
     {
-        for(int i = 0; i < object.size(); i++)
+        for (APlayer aPlayer : object)
         {
-            object.get(i).tick();
+            aPlayer.tick();
         }
     }
 
     // Renders everything
     public void render(Graphics g)
     {
-        for(int i = 0; i < object.size(); i++)
+        for (APlayer aPlayer : object)
         {
-            object.get(i).render(g);
+            aPlayer.render(g);
         }
     }
 

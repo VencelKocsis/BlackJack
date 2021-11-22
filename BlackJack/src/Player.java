@@ -1,5 +1,3 @@
-import GUI.GuiScreen;
-
 import java.awt.*;
 
 import static java.lang.String.valueOf;
@@ -19,6 +17,16 @@ public class Player extends APlayer
         STAND,
         LOSE,
         DRAW
+    }
+
+    public void InitRound()
+    {
+        Game.pot = 0;
+        Game.player.State = Player.GAMESTATES.INITIAL_POT;
+        Game.player.ClearDeck();
+        Game.player.setEditablePot(true);
+        Game.dealer.ClearDeck();
+        Game.player.wasStand = false;
     }
 
     public GAMESTATES State;
@@ -50,6 +58,11 @@ public class Player extends APlayer
     @Override
     public void render(Graphics g)
     {
+        Font f2 = new Font("SansSerif", Font.BOLD, 20);
+        g.setColor(Color.BLUE);
+        g.setFont(f2);
+        g.drawString("Moves: HIT (enter)| STAND (space)| DOUBLE DOWN (y)", 660, 670);
+
         Font f = new Font("SansSerif", Font.BOLD, 40);
         g.setFont(f);
 

@@ -1,8 +1,6 @@
-import GUI.GuiPanel;
-import GUI.GuiScreen;
-
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable
@@ -36,26 +34,23 @@ public class Game extends Canvas implements Runnable
         return new Card(random.nextInt(4), random.nextInt(14));
     }
 
-    public int GetPot()
-    {
-        return pot;
-    }
-
-    public void SetPot(int p)
-    {
-        pot = p;
-    }
-
-    public void input(KeyHandler key)
-    {
-        //player.input(key);
-    }
-
     private void init()
     {
         handler = new Handler();
         key = new KeyHandler(this);
-        player = new Player();
+
+        File f = new File("C:\\BME VIK\\II. ev\\I. felev\\Prog3\\HF\\BlackJack\\saved_game");
+
+        if (f.exists())
+        {
+            player = SaveGame.Load();
+            System.out.println("Game loaded from file");
+        }
+        else
+        {
+            player = new Player();
+        }
+
         dealer = new Dealer();
 
         handler.addObject(player);
