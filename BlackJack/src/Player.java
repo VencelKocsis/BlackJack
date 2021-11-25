@@ -16,7 +16,19 @@ public class Player extends APlayer
         WINNER,
         STAND,
         LOSE,
-        DRAW
+        DRAW,
+        MENU
+    }
+
+    public void NewGame()
+    {
+        Game.bet = 0;
+        money = 1000;
+        Game.player.State = Player.GAMESTATES.INITIAL_BET;
+        Game.player.ClearDeck();
+        Game.dealer.ClearDeck();
+        Game.player.wasStand = false;
+        Game.dealer.setUnfold(false);
     }
 
     public void InitRound()
@@ -34,7 +46,6 @@ public class Player extends APlayer
 
     public Player()
     {
-        super();
         State = GAMESTATES.INITIAL_BET;
     }
 
@@ -49,7 +60,7 @@ public class Player extends APlayer
         Font f = new Font("SansSerif", Font.BOLD, 40);
         g.setFont(f);
 
-        g.setColor(Color.BLACK);
+        g.setColor(Color.ORANGE);
         g.drawString("Player points: " + valueOf(this.GetPoints()), 150, 500);
         g.drawString("Player money: $" + valueOf(this.GetMoney()), 150, 560);
 
@@ -85,6 +96,9 @@ public class Player extends APlayer
                 break;
             case DRAW:
                 g.drawString("PLAYER GETS INITIAL BET: " + valueOf(Game.bet), 400, Game.HEIGHT/2);
+                break;
+            case MENU:
+                new Menu(g);
                 break;
             default:
                 g.drawString("BET: " + valueOf(Game.bet), 400, Game.HEIGHT/2);

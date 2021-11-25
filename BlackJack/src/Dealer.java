@@ -1,7 +1,5 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +32,7 @@ public class Dealer extends APlayer
         }
         try
         {
-            g.drawImage(resizeImage(back_image, 2 * 71, 2 * 96), 550, 0, null);
+            g.drawImage(Image.resizeImage(back_image, 2 * 71, 2 * 96), 550, 0, null);
         }
         catch (IOException e)
         {
@@ -43,19 +41,10 @@ public class Dealer extends APlayer
         g.drawImage(this.getCard(0).GetImage(), 550 + 71, 0, null);
     }
 
-    BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws IOException
-    {
-        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics2D = resizedImage.createGraphics();
-        graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
-        graphics2D.dispose();
-        return resizedImage;
-    }
-
     @Override
     public void render(Graphics g)
     {
-        g.setColor(Color.BLACK);
+        g.setColor(Color.ORANGE);
 
         if (Game.player.State != Player.GAMESTATES.INITIAL_BET && !this.unfold)
         {
@@ -72,11 +61,6 @@ public class Dealer extends APlayer
                 }
             }
         }
-    }
-
-    public boolean isUnfold()
-    {
-        return unfold;
     }
 
     public void setUnfold(boolean unfold)

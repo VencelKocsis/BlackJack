@@ -45,10 +45,8 @@ public class KeyHandler implements KeyListener
                         }
                         break;
                     case KeyEvent.VK_ESCAPE:
-                        System.out.println("Player hit Escape: EXIT");
-                        Game.player.InitRound();
-                        SaveGame.Save(Game.player);
-                        System.exit(0);
+                        System.out.println("Player hit ESCAPE: MENU");
+                        Game.player.State = Player.GAMESTATES.MENU;
                         break;
                 }
                 break;
@@ -66,10 +64,6 @@ public class KeyHandler implements KeyListener
                         Game.player.wasStand = true;
                         Game.dealer.setUnfold(true);
                         break;
-                    case KeyEvent.VK_E:
-                        // NEW GAME at this moment
-                        Game.player.InitRound();
-                        break;
                     case KeyEvent.VK_Y:
                         System.out.println("Player hit Tab: DOUBLE DOWN");
                         Game.player.ReduceMoney(Game.bet);
@@ -78,10 +72,8 @@ public class KeyHandler implements KeyListener
                         Game.dealer.setUnfold(true);
                         break;
                     case KeyEvent.VK_ESCAPE:
-                        System.out.println("Player hit Escape: EXIT");
-                        Game.player.InitRound();
-                        SaveGame.Save(Game.player);
-                        System.exit(0);
+                        System.out.println("Player hit ESCAPE: MENU");
+                        Game.player.State = Player.GAMESTATES.MENU;
                         break;
                     default:
                         System.out.println("Wrong input");
@@ -155,6 +147,9 @@ public class KeyHandler implements KeyListener
             case DRAW:
                 Game.player.AddMoney(Game.bet);
                 Game.player.InitRound();
+                break;
+            case MENU:
+                new Menu(Game.g);
                 break;
         }
     }

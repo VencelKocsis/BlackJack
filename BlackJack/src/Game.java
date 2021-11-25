@@ -1,6 +1,10 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -8,6 +12,7 @@ public class Game extends Canvas implements Runnable
 {
     public static int WIDTH = 1280;
     public static int HEIGHT  = 720;
+    public static Graphics g;
     public String title = "Black Jack";
 
     private Thread thread;
@@ -18,7 +23,7 @@ public class Game extends Canvas implements Runnable
     public static int bet;
 
     private static KeyHandler key;
-    private MouseHandler mouse;
+    private static MouseHandler mouse;
     private Handler handler;
 
     public static HashMap<Integer, Integer> Values;
@@ -33,8 +38,6 @@ public class Game extends Canvas implements Runnable
 
     public static Card GetRandomCard()
     {
-        //Random random = new Random();
-        //return new Card(random.nextInt(4), random.nextInt(14));
         return new Card(new Random().nextInt(4), new Random().nextInt(14));
     }
 
@@ -62,6 +65,7 @@ public class Game extends Canvas implements Runnable
 
         handler = new Handler();
         key = new KeyHandler(this);
+        mouse = new MouseHandler(this);
 
         File f = new File("C:\\BME VIK\\II. ev\\I. felev\\Prog3\\HF\\BlackJack\\saved_game");
 
@@ -138,7 +142,6 @@ public class Game extends Canvas implements Runnable
 
     private void render()
     {
-        // Renders the game
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null)
         {
@@ -148,11 +151,29 @@ public class Game extends Canvas implements Runnable
 
         Graphics g = bs.getDrawGraphics();
 
-        g.setColor(new Color(81,80,77));
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        BufferedImage wallpaper;
 
+        // Beolvassa a kártyapakli képet
+        InputStream stream = getClass().getResourceAsStream("game_wp.png");
+        try
+        {
+            assert stream != null;
+            wallpaper = ImageIO.read(stream);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+        try
+        {
+            g.drawImage(Image.resizeImage(wallpaper, Game.WIDTH, Game.HEIGHT), 0, 0, null);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        g.drawImage(wallpaper, 0, 0, null);
         handler.render(g);
-
         bs.show();
         g.dispose();
     }

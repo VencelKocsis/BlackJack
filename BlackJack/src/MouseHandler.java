@@ -34,12 +34,36 @@ public class MouseHandler implements MouseListener, MouseMotionListener
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        mouseB = e.getButton();
+    public void mousePressed(MouseEvent e)
+    {
+        if (Game.player.State == Player.GAMESTATES.MENU)
+        {
+            /** NEW GAME BUTTON */
+            if (getX() >  150 && getX() < 400 && getY() > 360 && getY() < 420)
+            {
+                System.out.println("New Game clicked");
+                Game.player.State = Player.GAMESTATES.INITIAL_BET;
+                Game.player.NewGame();
+            }
+            /** LOAD GAME BUTTON */
+            if (getX() >  150 && getX() < 400 && getY() > 460 && getY() < 520)
+            {
+                System.out.println("Load Game clicked");
+                Game.player.State = Player.GAMESTATES.INITIAL_BET;
+            }
+            /** EXIT BUTTON */
+            if (getX() >  150 && getX() < 400 && getY() > 560 && getY() < 620)
+            {
+                System.out.println("Exit clicked");
+                SaveGame.Save(Game.player);
+                System.exit(0);
+            }
+        }
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(MouseEvent e)
+    {
         mouseB = -1;
     }
 
