@@ -1,17 +1,16 @@
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 public class Card
 {
     private CardImage image;
     private int value;
     private boolean ace;
-    private int row;
-    private int column;
-    private static final HashMap<Integer, Integer> Values = new HashMap<Integer, Integer>();
+    private final int row;
+    private final int column;
+    /*private static final HashMap<Integer, Integer> Values;
 
-    static
-    {
+    static {
+        Values = new HashMap<Integer, Integer>();
         Values.put(0, 11);
         Values.put(1, 2);
         Values.put(2, 3);
@@ -25,7 +24,7 @@ public class Card
         Values.put(10, 10);
         Values.put(11, 10);
         Values.put(12, 10);
-    }
+    }*/
 
     public Card(int r, int c)
     {
@@ -37,7 +36,7 @@ public class Card
 
     void SetValue()
     {
-        value = Values.get(column);
+        value = Game.Values.get(column);
 
         if (column != 0) ace = false;
         else ace = true;

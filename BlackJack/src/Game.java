@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable
@@ -14,11 +15,13 @@ public class Game extends Canvas implements Runnable
 
     public static Player player;
     public static Dealer dealer;
-    public static int pot;
+    public static int bet;
 
     private static KeyHandler key;
     private MouseHandler mouse;
     private Handler handler;
+
+    public static HashMap<Integer, Integer> Values;
 
     /** Starting the Game */
     public Game()
@@ -30,12 +33,33 @@ public class Game extends Canvas implements Runnable
 
     public static Card GetRandomCard()
     {
-        Random random = new Random();
-        return new Card(random.nextInt(4), random.nextInt(14));
+        //Random random = new Random();
+        //return new Card(random.nextInt(4), random.nextInt(14));
+        return new Card(new Random().nextInt(4), new Random().nextInt(14));
+    }
+
+    private void FillValues()
+    {
+        Values.put(0, 11);
+        Values.put(1, 2);
+        Values.put(2, 3);
+        Values.put(3, 4);
+        Values.put(4, 5);
+        Values.put(5, 6);
+        Values.put(6, 7);
+        Values.put(7, 8);
+        Values.put(8, 9);
+        Values.put(9, 10);
+        Values.put(10, 10);
+        Values.put(11, 10);
+        Values.put(12, 10);
     }
 
     private void init()
     {
+        Values = new HashMap<Integer, Integer>();
+        FillValues();
+
         handler = new Handler();
         key = new KeyHandler(this);
 
@@ -98,7 +122,6 @@ public class Game extends Canvas implements Runnable
             lastTime = now;
             while (delta >= 1)
             {
-                tick();
                 delta--;
             }
             render();
@@ -111,12 +134,6 @@ public class Game extends Canvas implements Runnable
             }
         }
         stop();
-    }
-
-    //Updates the game
-    private void tick()
-    {
-        handler.tick();
     }
 
     private void render()

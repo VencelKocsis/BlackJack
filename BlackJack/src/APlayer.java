@@ -13,7 +13,6 @@ public abstract class APlayer implements Serializable
         points = 0;
     }
 
-    public abstract void tick();
     public abstract void render(Graphics g);
 
     public Card getCard(int index)

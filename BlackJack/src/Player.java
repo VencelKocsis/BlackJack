@@ -9,7 +9,7 @@ public class Player extends APlayer
 
     public enum GAMESTATES
     {
-        INITIAL_POT,
+        INITIAL_BET,
         GAME,
         BLACKJACK,
         BUST,
@@ -21,38 +21,21 @@ public class Player extends APlayer
 
     public void InitRound()
     {
-        Game.pot = 0;
-        Game.player.State = Player.GAMESTATES.INITIAL_POT;
+        Game.bet = 0;
+        Game.player.State = Player.GAMESTATES.INITIAL_BET;
         Game.player.ClearDeck();
-        Game.player.setEditablePot(true);
         Game.dealer.ClearDeck();
         Game.player.wasStand = false;
+        Game.dealer.setUnfold(false);
+        SaveGame.Save(Game.player);
     }
 
     public GAMESTATES State;
 
-    private boolean editablePot = true;
-
     public Player()
     {
         super();
-        State = GAMESTATES.INITIAL_POT;
-    }
-
-    public boolean isEditablePot()
-    {
-        return editablePot;
-    }
-
-    public void setEditablePot(boolean editablePot)
-    {
-        this.editablePot = editablePot;
-    }
-
-    @Override
-    public void tick()
-    {
-
+        State = GAMESTATES.INITIAL_BET;
     }
 
     @Override
@@ -61,7 +44,7 @@ public class Player extends APlayer
         Font f2 = new Font("SansSerif", Font.BOLD, 20);
         g.setColor(Color.BLUE);
         g.setFont(f2);
-        g.drawString("Moves: HIT (enter)| STAND (space)| DOUBLE DOWN (y)", 660, 670);
+        g.drawString("Moves: HIT (enter)| STAND (space)| DOUBLE DOWN (y) | ALL IN (a)", 620, 670);
 
         Font f = new Font("SansSerif", Font.BOLD, 40);
         g.setFont(f);
@@ -77,27 +60,34 @@ public class Player extends APlayer
             case WINNER:
                 if (wasStand)
                 {
-                    g.drawString("DEALER BUSTED  PLAYER WINS: $" + valueOf(2 * Game.pot), 400, Game.HEIGHT/2);
+                    if (Game.dealer.GetPoints() > 21)
+                    {
+                        g.drawString("DEALER BUSTED  PLAYER WINS: $" + valueOf(2 * Game.bet), 400, Game.HEIGHT/2);
+                    }
+                    else
+                    {
+                        g.drawString("PLAYER WINS: $" + valueOf(2 * Game.bet), 400, Game.HEIGHT/2);
+                    }
                 }
                 else
                 {
-                    g.drawString("PLAYER WINS $" + valueOf(2 * Game.pot), 400, Game.HEIGHT/2);
+                    g.drawString("PLAYER WINS $" + valueOf(2 * Game.bet), 400, Game.HEIGHT/2);
                 }
                 break;
             case BUST:
                 g.drawString("ITS A BUST", 400, Game.HEIGHT/2);
                 break;
             case BLACKJACK:
-                g.drawString("PLAYER HAS BLACKJACK! WINS: " + valueOf(2.5 * Game.pot), 400, Game.HEIGHT/2);
+                g.drawString("PLAYER HAS BLACKJACK! WINS: " + valueOf(2.5 * Game.bet), 400, Game.HEIGHT/2);
                 break;
             case LOSE:
                 g.drawString("PLAYER HAS LOST", 400, Game.HEIGHT/2);
                 break;
             case DRAW:
-                g.drawString("PLAYER GETS INITIAL POT: " + valueOf(Game.pot), 400, Game.HEIGHT/2);
+                g.drawString("PLAYER GETS INITIAL BET: " + valueOf(Game.bet), 400, Game.HEIGHT/2);
                 break;
             default:
-                g.drawString("Pot: " + valueOf(Game.pot), 400, Game.HEIGHT/2);
+                g.drawString("BET: " + valueOf(Game.bet), 400, Game.HEIGHT/2);
                 break;
         }
 
