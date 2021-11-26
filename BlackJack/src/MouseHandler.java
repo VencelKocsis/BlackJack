@@ -1,6 +1,7 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 
 public class MouseHandler implements MouseListener, MouseMotionListener
 {
@@ -56,6 +57,15 @@ public class MouseHandler implements MouseListener, MouseMotionListener
             {
                 System.out.println("Exit clicked");
                 SaveGame.Save(Game.player);
+                try
+                {
+                    Game.GetStream().close();
+                }
+                catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                }
+                Game.GetThread().stop();
                 System.exit(0);
             }
         }

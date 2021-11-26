@@ -9,7 +9,8 @@ public class Card
     private final int column;
     /*private static final HashMap<Integer, Integer> Values;
 
-    static {
+    static
+    {
         Values = new HashMap<Integer, Integer>();
         Values.put(0, 11);
         Values.put(1, 2);

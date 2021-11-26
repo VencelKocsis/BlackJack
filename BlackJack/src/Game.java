@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -15,12 +16,14 @@ public class Game extends Canvas implements Runnable
     public static Graphics g;
     public String title = "Black Jack";
 
-    private Thread thread;
+    private static Thread thread;
     private boolean isRunning = false;
 
     public static Player player;
     public static Dealer dealer;
     public static int bet;
+
+    private static InputStream stream;
 
     private static KeyHandler key;
     private static MouseHandler mouse;
@@ -38,7 +41,7 @@ public class Game extends Canvas implements Runnable
 
     public static Card GetRandomCard()
     {
-        return new Card(new Random().nextInt(4), new Random().nextInt(14));
+        return new Card(new Random().nextInt(4), new Random().nextInt(13));
     }
 
     private void FillValues()
@@ -56,6 +59,7 @@ public class Game extends Canvas implements Runnable
         Values.put(10, 10);
         Values.put(11, 10);
         Values.put(12, 10);
+        Values.put(13, 10);
     }
 
     private void init()
@@ -83,6 +87,16 @@ public class Game extends Canvas implements Runnable
 
         handler.addObject(player);
         handler.addObject(dealer);
+    }
+
+    public static Thread GetThread()
+    {
+        return thread;
+    }
+
+    public static InputStream GetStream()
+    {
+        return stream;
     }
 
     private synchronized void start()
@@ -128,7 +142,14 @@ public class Game extends Canvas implements Runnable
             {
                 delta--;
             }
-            render();
+            try
+            {
+                render();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
             frames++;
 
             if (System.currentTimeMillis() - timer > 1000)
@@ -140,7 +161,7 @@ public class Game extends Canvas implements Runnable
         stop();
     }
 
-    private void render()
+    private void render() throws IOException
     {
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null)
@@ -154,7 +175,7 @@ public class Game extends Canvas implements Runnable
         BufferedImage wallpaper;
 
         // Beolvassa a kártyapakli képet
-        InputStream stream = getClass().getResourceAsStream("game_wp.png");
+        stream = getClass().getResourceAsStream("game_wp.png");
         try
         {
             assert stream != null;
@@ -171,6 +192,7 @@ public class Game extends Canvas implements Runnable
         catch (IOException e)
         {
             e.printStackTrace();
+            stream.close();
         }
         g.drawImage(wallpaper, 0, 0, null);
         handler.render(g);
