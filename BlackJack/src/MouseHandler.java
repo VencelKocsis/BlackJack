@@ -1,6 +1,7 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
 import java.io.IOException;
 
 public class MouseHandler implements MouseListener, MouseMotionListener
@@ -43,14 +44,24 @@ public class MouseHandler implements MouseListener, MouseMotionListener
             if (getX() >  150 && getX() < 400 && getY() > 360 && getY() < 420)
             {
                 System.out.println("New Game clicked");
-                Game.player.State = Player.GAMESTATES.INITIAL_BET;
-                Game.player.NewGame();
+                Game.NewGame();
             }
             /** LOAD GAME BUTTON */
             if (getX() >  150 && getX() < 400 && getY() > 460 && getY() < 520)
             {
                 System.out.println("Load Game clicked");
-                Game.player.State = Player.GAMESTATES.INITIAL_BET;
+                File f = new File("C:\\BME VIK\\II. ev\\I. felev\\Prog3\\HF\\BlackJack\\saved_game");
+
+                if (f.exists())
+                {
+                    Game.player = SaveGame.Load();
+                    System.out.println("Game loaded from file");
+                }
+                else
+                {
+                    System.out.println("Nothing has saved -> New Game");
+                    Game.NewGame();
+                }
             }
             /** EXIT BUTTON */
             if (getX() >  150 && getX() < 400 && getY() > 560 && getY() < 620)
@@ -65,7 +76,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener
                 {
                     ex.printStackTrace();
                 }
-                Game.GetThread().stop();
+                //Game.GetThread().stop();
                 System.exit(0);
             }
         }

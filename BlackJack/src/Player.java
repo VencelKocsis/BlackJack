@@ -4,8 +4,8 @@ import static java.lang.String.valueOf;
 
 public class Player extends APlayer
 {
-    private int money = 1000;
-    public boolean wasStand = false;
+    private int money;
+    public boolean wasStand;
 
     public enum GAMESTATES
     {
@@ -20,15 +20,12 @@ public class Player extends APlayer
         MENU
     }
 
-    public void NewGame()
+    public void Reset()
     {
-        Game.bet = 0;
         money = 1000;
-        Game.player.State = Player.GAMESTATES.INITIAL_BET;
-        Game.player.ClearDeck();
-        Game.dealer.ClearDeck();
-        Game.player.wasStand = false;
-        Game.dealer.setUnfold(false);
+        State = Player.GAMESTATES.INITIAL_BET;
+        ClearDeck();
+        wasStand = false;
     }
 
     public void InitRound()
@@ -47,6 +44,8 @@ public class Player extends APlayer
     public Player()
     {
         State = GAMESTATES.INITIAL_BET;
+        money = 1000;
+        wasStand = false;
     }
 
     @Override
@@ -98,7 +97,7 @@ public class Player extends APlayer
                 g.drawString("PLAYER GETS INITIAL BET: " + valueOf(Game.bet), 400, Game.HEIGHT/2);
                 break;
             case MENU:
-                new Menu(g);
+                Game.menu = new Menu(g);
                 break;
             default:
                 g.drawString("BET: " + valueOf(Game.bet), 400, Game.HEIGHT/2);

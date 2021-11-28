@@ -149,7 +149,7 @@ public class KeyHandler implements KeyListener
                 Game.player.InitRound();
                 break;
             case MENU:
-                new Menu(Game.g);
+                //new Menu(g);
                 break;
         }
     }
