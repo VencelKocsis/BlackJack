@@ -15,6 +15,12 @@ public class Dealer extends APlayer
         this.AddCard(Game.GetRandomCard());
     }
 
+    public void Reset()
+    {
+        ClearDeck();
+        setUnfold(false);
+    }
+
     public void FoldedCard(Graphics g)
     {
         BufferedImage back_image;

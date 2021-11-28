@@ -13,11 +13,11 @@ public class Game extends Canvas implements Runnable
 {
     public static int WIDTH = 1280;
     public static int HEIGHT  = 720;
-    public static Graphics g;
     public String title = "Black Jack";
 
     private static Thread thread;
     private boolean isRunning = false;
+    public static Menu menu;
 
     public static Player player;
     public static Dealer dealer;
@@ -60,6 +60,13 @@ public class Game extends Canvas implements Runnable
         Values.put(11, 10);
         Values.put(12, 10);
         Values.put(13, 10);
+    }
+
+    public static void NewGame()
+    {
+        bet = 0;
+        player.Reset();
+        dealer.Reset();
     }
 
     private void init()
