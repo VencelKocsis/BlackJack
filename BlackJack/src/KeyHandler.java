@@ -45,8 +45,9 @@ public class KeyHandler implements KeyListener
                         }
                         break;
                     case KeyEvent.VK_ESCAPE:
-                        System.out.println("Player hit ESCAPE: MENU");
+                        System.out.println("Player hit ESCAPE: MENU from Initial");
                         Game.player.State = Player.GAMESTATES.MENU;
+                        SaveGame.Save(Game.player);
                         break;
                 }
                 break;
@@ -72,7 +73,8 @@ public class KeyHandler implements KeyListener
                         Game.dealer.setUnfold(true);
                         break;
                     case KeyEvent.VK_ESCAPE:
-                        System.out.println("Player hit ESCAPE: MENU");
+                        System.out.println("Player hit ESCAPE: MENU from Game");
+                        SaveGame.Save(Game.player);
                         Game.player.State = Player.GAMESTATES.MENU;
                         break;
                     default:
@@ -147,9 +149,6 @@ public class KeyHandler implements KeyListener
             case DRAW:
                 Game.player.AddMoney(Game.bet);
                 Game.player.InitRound();
-                break;
-            case MENU:
-                //new Menu(g);
                 break;
         }
     }

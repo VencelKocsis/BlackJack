@@ -6,6 +6,7 @@ public class Player extends APlayer
 {
     private int money;
     public boolean wasStand;
+    public GAMESTATES State;
 
     public enum GAMESTATES
     {
@@ -23,23 +24,22 @@ public class Player extends APlayer
     public void Reset()
     {
         money = 1000;
-        State = Player.GAMESTATES.INITIAL_BET;
+        State = GAMESTATES.INITIAL_BET;
         ClearDeck();
         wasStand = false;
+        SaveGame.Save(this);
     }
 
     public void InitRound()
     {
         Game.bet = 0;
-        Game.player.State = Player.GAMESTATES.INITIAL_BET;
-        Game.player.ClearDeck();
+        State = GAMESTATES.INITIAL_BET;
+        this.ClearDeck();
         Game.dealer.ClearDeck();
-        Game.player.wasStand = false;
+        wasStand = false;
         Game.dealer.setUnfold(false);
-        SaveGame.Save(Game.player);
+        SaveGame.Save(this);
     }
-
-    public GAMESTATES State;
 
     public Player()
     {

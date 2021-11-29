@@ -14,6 +14,9 @@ public class Game extends Canvas implements Runnable
     public static int WIDTH = 1280;
     public static int HEIGHT  = 720;
     public String title = "Black Jack";
+    public static boolean loadedGame = false;
+
+    public static Graphics g;
 
     private static Thread thread;
     private boolean isRunning = false;
@@ -64,6 +67,7 @@ public class Game extends Canvas implements Runnable
 
     public static void NewGame()
     {
+        loadedGame = false;
         bet = 0;
         player.Reset();
         dealer.Reset();
@@ -83,6 +87,7 @@ public class Game extends Canvas implements Runnable
         if (f.exists())
         {
             player = SaveGame.Load();
+            loadedGame = true;
             System.out.println("Game loaded from file");
         }
         else
@@ -91,6 +96,7 @@ public class Game extends Canvas implements Runnable
         }
 
         dealer = new Dealer();
+        player.State = Player.GAMESTATES.MENU;
 
         handler.addObject(player);
         handler.addObject(dealer);
@@ -177,7 +183,7 @@ public class Game extends Canvas implements Runnable
             return;
         }
 
-        Graphics g = bs.getDrawGraphics();
+        g = bs.getDrawGraphics();
 
         BufferedImage wallpaper;
 

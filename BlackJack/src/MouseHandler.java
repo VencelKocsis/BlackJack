@@ -1,7 +1,6 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
 import java.io.IOException;
 
 public class MouseHandler implements MouseListener, MouseMotionListener
@@ -28,7 +27,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener
         return mouseB;
     }
 
-
     @Override
     public void mouseClicked(MouseEvent e)
     {
@@ -50,12 +48,11 @@ public class MouseHandler implements MouseListener, MouseMotionListener
             if (getX() >  150 && getX() < 400 && getY() > 460 && getY() < 520)
             {
                 System.out.println("Load Game clicked");
-                File f = new File("C:\\BME VIK\\II. ev\\I. felev\\Prog3\\HF\\BlackJack\\saved_game");
 
-                if (f.exists())
+                if (Game.loadedGame)
                 {
-                    Game.player = SaveGame.Load();
                     System.out.println("Game loaded from file");
+                    Game.player.State = Player.GAMESTATES.INITIAL_BET;
                 }
                 else
                 {
